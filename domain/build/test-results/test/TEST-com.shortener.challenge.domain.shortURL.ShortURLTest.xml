@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.shortener.challenge.domain.shortURL.ShortURLTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-07-17T23:02:31" hostname="YY215150" time="0.039">
+  <properties/>
+  <testcase name="givenAValidParams_whenCallWith_thenInstantiateAShortURL()" classname="com.shortener.challenge.domain.shortURL.ShortURLTest" time="0.037"/>
+  <testcase name="givenAValidParams_whenCallNewShortURL_thenInstantiateAShortURL()" classname="com.shortener.challenge.domain.shortURL.ShortURLTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
