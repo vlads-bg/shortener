@@ -1,21 +1,21 @@
 package com.shortener.challenge.application.shorturl.retrieve.get.code;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
-
 import com.shortener.challenge.application.UseCaseTest;
 import com.shortener.challenge.domain.exceptions.NotFoundException;
 import com.shortener.challenge.domain.shortURL.ShortURL;
 import com.shortener.challenge.domain.shortURL.ShortURLGateway;
 import com.shortener.challenge.domain.shortURL.code.ShortURLCodeLang3;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
 
 public class GetByCodeShortURLUseCaseTest extends UseCaseTest {
     @InjectMocks
@@ -29,7 +29,7 @@ public class GetByCodeShortURLUseCaseTest extends UseCaseTest {
 
     @Override
     protected List<Object> getMocks() {
-        return Arrays.asList(shortURLGateway);
+        return List.of(shortURLGateway);
     }
 
     @Test
@@ -38,21 +38,16 @@ public class GetByCodeShortURLUseCaseTest extends UseCaseTest {
         final String expectedCode = "ABC123";
 
         when(shortURLCodeLang3.create(any(), any()))
-            .thenReturn(expectedCode);
+                .thenReturn(expectedCode);
 
-        final ShortURL aShortURL = ShortURL.newShortURL(
-            expectedTarget,
-            90,
-            shortURLCodeLang3,
-            null
-        );
+        final ShortURL aShortURL = ShortURL.newShortURL(expectedTarget, 90, shortURLCodeLang3);
 
         when(shortURLGateway.findByCode(eq(expectedCode)))
-            .thenReturn(Optional.of(aShortURL.clone()));
+                .thenReturn(Optional.of(aShortURL.clone()));
 
         final GetByCodeShortURLOutput actualShortURL = useCase.execute(expectedCode);
 
-        Assertions.assertEquals(expectedTarget, actualShortURL.getTarget());
+        Assertions.assertEquals(expectedTarget, actualShortURL.target());
         Assertions.assertTrue(actualShortURL.isValid());
     }
 
@@ -62,11 +57,11 @@ public class GetByCodeShortURLUseCaseTest extends UseCaseTest {
         final String expectedErrorMessage = "ShortURL with code " + expectedCode + " was not found";
 
         when(shortURLGateway.findByCode(eq(expectedCode)))
-            .thenReturn(Optional.empty());
+                .thenReturn(Optional.empty());
 
         final Throwable actualException = Assertions.assertThrows(
-            NotFoundException.class,
-            () -> useCase.execute(expectedCode)
+                NotFoundException.class,
+                () -> useCase.execute(expectedCode)
         );
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
@@ -78,11 +73,11 @@ public class GetByCodeShortURLUseCaseTest extends UseCaseTest {
         final String expectedCode = "ABC123";
 
         when(shortURLGateway.findByCode(eq(expectedCode)))
-            .thenThrow(new IllegalStateException(expectedErrorMessage));
+                .thenThrow(new IllegalStateException(expectedErrorMessage));
 
         final Throwable actualException = Assertions.assertThrows(
-            IllegalStateException.class,
-            () -> useCase.execute(expectedCode)
+                IllegalStateException.class,
+                () -> useCase.execute(expectedCode)
         );
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());

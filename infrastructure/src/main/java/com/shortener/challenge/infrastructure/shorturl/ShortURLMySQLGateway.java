@@ -6,15 +6,14 @@ import com.shortener.challenge.infrastructure.shorturl.persistence.ShortUrlJpaEn
 import com.shortener.challenge.infrastructure.shorturl.persistence.ShortUrlRepository;
 import java.util.Optional;
 import java.util.UUID;
+
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class ShortURLMySQLGateway implements ShortURLGateway {
     private final ShortUrlRepository repository;
-
-    public ShortURLMySQLGateway(ShortUrlRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public ShortURL create(ShortURL aShortURL) {

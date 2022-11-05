@@ -53,24 +53,24 @@ public class CreateShortURLUseCaseTest extends UseCaseTest {
         final CreateShortURLOutput actualOutput = useCase.execute(aCommand);
 
         Assertions.assertNotNull(actualOutput);
-        Assertions.assertNotNull(actualOutput.getTarget());
-        Assertions.assertNotNull(actualOutput.getCode());
+        Assertions.assertNotNull(actualOutput.target());
+        Assertions.assertNotNull(actualOutput.code());
 
         Mockito.verify(shortURLGateway, times(1)).create(argThat(aShortURL ->
-            Objects.equals(expectedTarget, aShortURL.getTarget())
+            Objects.equals(expectedTarget, aShortURL.target())
                 && Objects.equals(expectedIsValid, aShortURL.isValid())
-                && Objects.equals(expectedCode, aShortURL.getCode())
-                && Objects.equals(aShortURL.getCreatedAt().plusSeconds(expectedSecondsInMemory), aShortURL.getValidity())
-                && Objects.nonNull(aShortURL.getId())
-                && Objects.nonNull(aShortURL.getCode())
-                && Objects.nonNull(aShortURL.getCreatedAt())
+                && Objects.equals(expectedCode, aShortURL.code())
+                && Objects.equals(aShortURL.createdAt().plusSeconds(expectedSecondsInMemory), aShortURL.validity())
+                && Objects.nonNull(aShortURL.id())
+                && Objects.nonNull(aShortURL.code())
+                && Objects.nonNull(aShortURL.createdAt())
         ));
     }
 
     @Test
     public void givenAInvalidTarget_whenCallsCreateShortURL_thenShouldReturnException() {
         final Integer expectedSecondsInMemory = 90;
-        final String expectedErrorMessage = "'target' should not be null";
+        final String expectedErrorMessage = "target is marked non-null but is null";
 
         final CreateShortURLCommand aCommand =
             CreateShortURLCommand.with(null, expectedSecondsInMemory);
@@ -89,7 +89,7 @@ public class CreateShortURLUseCaseTest extends UseCaseTest {
     public void givenAInvalidCode_whenCallsCreateShortURL_thenShouldReturnException() {
         final String expectedTarget = "www.google.com";
         final Integer expectedSecondsInMemory = 90;
-        final String expectedErrorMessage = "'code' should not be null";
+        final String expectedErrorMessage = "code is marked non-null but is null";
 
         final CreateShortURLCommand aCommand =
             CreateShortURLCommand.with(expectedTarget, expectedSecondsInMemory);

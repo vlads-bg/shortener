@@ -44,20 +44,19 @@ public class GetByIdShortURLUseCaseTest extends UseCaseTest {
         final ShortURL aShortURL = ShortURL.newShortURL(
             expectedTarget,
             90,
-            shortURLCodeLang3,
-            null
+            shortURLCodeLang3
         );
-        final UUID expectedId = aShortURL.getId();
+        final UUID expectedId = aShortURL.id();
 
         when(shortURLGateway.findById(eq(expectedId)))
             .thenReturn(Optional.of(aShortURL.clone()));
 
         final GetByIdShortURLOutput actualShortURL = useCase.execute(expectedId);
 
-        Assertions.assertEquals(expectedId, actualShortURL.getId());
-        Assertions.assertEquals(expectedCode, actualShortURL.getCode());
-        Assertions.assertEquals(aShortURL.getCreatedAt(), actualShortURL.getCreatedAt());
-        Assertions.assertEquals(aShortURL.getValidity(), actualShortURL.getValidity());
+        Assertions.assertEquals(expectedId, actualShortURL.id());
+        Assertions.assertEquals(expectedCode, actualShortURL.code());
+        Assertions.assertEquals(aShortURL.createdAt(), actualShortURL.createdAt());
+        Assertions.assertEquals(aShortURL.validity(), actualShortURL.validity());
     }
 
     @Test

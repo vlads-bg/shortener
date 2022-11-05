@@ -1,15 +1,16 @@
 package com.shortener.challenge.domain.shortURL;
 
 import com.shortener.challenge.domain.shortURL.code.ShortURLCodeLang3;
-import java.time.Instant;
-import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
+import java.util.UUID;
+
 public class ShortURLTest {
     @BeforeEach
-    private void clean() {
+    public void clean() {
 
     }
 
@@ -19,19 +20,16 @@ public class ShortURLTest {
         final int MIN_SIZE = 5;
         final int MAX_SIZE = 10;
         final String expectedCode = new ShortURLCodeLang3().create(MIN_SIZE, MAX_SIZE);
-        final String expectedTarget = "www.mercadolivre.com.br";
-        final boolean expectedIsActive = true;
-        final Instant now = Instant.now();
-        final Instant expectedCreatedAt = now;
-        final Instant expectedValidity = now.plusSeconds(60);
+        final String expectedTarget = "www.test.com.br";
+        final Instant expectedCreatedAt = Instant.now();
+        final Instant expectedValidity = expectedCreatedAt.plusSeconds(60);
 
         final ShortURL actualShortURL = ShortURL.with(
-            expectedId,
-            expectedCode,
-            expectedTarget,
-            expectedIsActive,
-            expectedValidity,
-            expectedCreatedAt
+                expectedId,
+                expectedCode,
+                expectedTarget,
+                expectedValidity,
+                expectedCreatedAt
         );
 
         Assertions.assertNotNull(actualShortURL);
@@ -44,12 +42,12 @@ public class ShortURLTest {
 
     @Test
     public void givenAValidParams_whenCallNewShortURL_thenInstantiateAShortURL() {
-        final String expectedTarget = "www.mercadolivre.com.br";
-        final Integer expectedSecondsInMemory = 90;
+        final String expectedTarget = "www.test.com.br";
+        final int expectedSecondsInMemory = 90;
         final Instant createdAt = Instant.now();
         final int MIN_SIZE = 5;
         final int MAX_SIZE = 10;
-        final ShortURL actualShortURL = ShortURL.newShortURL(expectedTarget, expectedSecondsInMemory, new ShortURLCodeLang3(), null);
+        final ShortURL actualShortURL = ShortURL.newShortURL(expectedTarget, expectedSecondsInMemory, new ShortURLCodeLang3());
 
         final Instant expectedValidity = actualShortURL.getCreatedAt().plusSeconds(expectedSecondsInMemory);
 

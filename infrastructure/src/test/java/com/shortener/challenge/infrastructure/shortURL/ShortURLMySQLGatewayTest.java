@@ -19,10 +19,10 @@ public class ShortURLMySQLGatewayTest {
 
     @Test
     public void givenAValidShortURL_whenCallsCreate_shouldReturnANewShortURL() {
-        final String expectedTarget = "www.mercadolivre.com";
+        final String expectedTarget = "www.test.com";
 
         ShortURLCode shortURLCode = new ShortURLCodeLang3();
-        final ShortURL aShortURL = ShortURL.newShortURL(expectedTarget, 90, shortURLCode, null);
+        final ShortURL aShortURL = ShortURL.newShortURL(expectedTarget, 90, shortURLCode);
 
         Assertions.assertEquals(0, repository.count());
 
